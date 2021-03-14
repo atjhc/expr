@@ -83,53 +83,42 @@ expr_ast_list_t expr_ast_list_create(expr_ast_t ast) {
     if (ast_list == NULL)
         return NULL;
 
-    ast_list->head = ast;
-    ast_list->tail = NULL;
+    ast_list->count = 1;
+    ast_list->args = malloc(sizeof(expr_ast_t));
+    ast_list->args[0] = ast;
 
     return ast_list;
 }
 
-void expr_ast_list_destroy(expr_ast_list_t expr_list) {
-    if (expr_list->tail != NULL) {
-        expr_ast_list_destroy(expr_list->tail);
+void expr_ast_list_destroy(expr_ast_list_t ast_list) {
+    for (unsigned int i = 0; i < ast_list->count; i++) {
+        expr_ast_destroy(ast_list->args[i]);
     }
-
-    expr_ast_destroy(expr_list->head);
-
-    free(expr_list);
+    free(ast_list);
 }
 
-expr_ast_list_t expr_ast_list_cons(expr_ast_list_t expr_list, expr_ast_t expr) {
-    expr_ast_list_t new_expr_list;
+expr_ast_list_t expr_ast_list_append(expr_ast_list_t ast_list, expr_ast_t ast) {
+    ast_list->args = realloc(ast_list->args, sizeof(expr_ast_t) * (ast_list->count + 1));
 
-    new_expr_list = expr_ast_list_create(expr);
-    new_expr_list->tail = expr_list;
+    ast_list->args[ast_list->count] = ast;
+    ast_list->count += 1;
 
-    return new_expr_list;
+    return ast_list;
 }
 
-int expr_ast_list_length(expr_ast_list_t expr_list) {
-    int i = 0;
-
-    while (expr_list != NULL) {
-        expr_list = expr_list->tail;
-        i++;
-    }
-
-    return i;
-}
+unsigned int expr_ast_list_length(expr_ast_list_t ast_list) { return ast_list->count; }
 
 #pragma mark - Debug
 
-void _expr_ast_list_fprint(FILE *f, expr_ast_list_t expr_list) {
-    if (expr_list == NULL)
+void _expr_ast_list_fprint(FILE *f, expr_ast_list_t ast_list) {
+    if (ast_list == NULL)
         return;
 
-    _expr_ast_fprint(f, expr_list->head);
-
-    if (expr_list->tail != NULL) {
-        fprintf(f, ", ");
-        _expr_ast_list_fprint(f, expr_list->tail);
+    for (unsigned int i = 0; i < ast_list->count; i++) {
+        if (i > 0) {
+            fprintf(f, ", ");
+        }
+        _expr_ast_fprint(f, ast_list->args[i]);
     }
 }
 

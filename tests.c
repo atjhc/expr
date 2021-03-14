@@ -8,22 +8,17 @@
 extern int yydebug;
 #endif // YYDEBUG
 
-void test_expr() {
-    expr_program_t expr = expr_program_create("x * sin(-pi) + pow(2, 3)");
+void test_basic_program() {
+    expr_program_t program = expr_program_create("x + pow(2, 3)");
 
     double x = 10;
-    double pi = 3.14159;
 
-    expr_program_insert_symbol(expr, "x", 0, &x);
-    expr_program_insert_symbol(expr, "pi", 0, &pi);
+    expr_program_insert_symbol(program, "x", 0, &x);
+    expr_program_insert_symbol(program, "pow", 2, pow);
 
-    expr_program_insert_symbol(expr, "sin", 1, sin);
-    expr_program_insert_symbol(expr, "pow", 2, pow);
+    assert(expr_program_evaluate(program) == 19);
 
-    float result = expr_program_evaluate(expr);
-    printf("%f\n", result);
-
-    expr_program_destroy(expr);
+    expr_program_destroy(program);
 }
 
 int main(int argc, char *argv[]) {
@@ -31,7 +26,7 @@ int main(int argc, char *argv[]) {
     yydebug = 1;
 #endif // YYDEBUG
 
-    test_expr();
+    test_basic_program();
 
     return 0;
 }

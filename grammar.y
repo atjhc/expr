@@ -66,7 +66,7 @@ expr: LPAREN expr RPAREN            { $$ = $2; }
     ;
 
 expr_list:  expr            { $$ = expr_ast_list_create($1); }
-    | expr COMMA expr_list  { $$ = expr_ast_list_cons($3, $1); }
+    | expr COMMA expr_list  { $$ = expr_ast_list_append($3, $1); }
     ;
 
 %%

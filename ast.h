@@ -29,8 +29,8 @@ struct expr_ast_s;
 struct expr_ast_list_s;
 
 typedef struct expr_ast_list_s {
-    struct expr_ast_s *head;
-    struct expr_ast_list_s *tail;
+    unsigned int count;
+    struct expr_ast_s **args;
 } * expr_ast_list_t;
 
 typedef struct expr_ast_s {
@@ -51,8 +51,8 @@ void expr_ast_destroy(expr_ast_t expr);
 expr_ast_list_t expr_ast_list_create(expr_ast_t expr);
 void expr_ast_list_destroy(expr_ast_list_t expr_list);
 
-expr_ast_list_t expr_ast_list_cons(expr_ast_list_t expr_list, expr_ast_t expr);
-int expr_ast_list_length(expr_ast_list_t expr_list);
+expr_ast_list_t expr_ast_list_append(expr_ast_list_t expr_list, expr_ast_t expr);
+unsigned int expr_ast_list_length(expr_ast_list_t expr_list);
 
 void _expr_ast_list_fprint(FILE *f, expr_ast_list_t expr_list);
 void _expr_ast_fprint(FILE *f, expr_ast_t expr);

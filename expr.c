@@ -74,95 +74,87 @@ scalar_t _expr_call_fn(expr_program_t program, void *fn, expr_ast_list_t args) {
 
     switch (arity) {
     case 1:
-        return ((scalar_t(*)(scalar_t))fn)(_expr_program_evaluate_ast(program, args->head));
+        return ((scalar_t(*)(scalar_t))fn)(_expr_program_evaluate_ast(program, args->args[0]));
     case 2:
         return ((scalar_t(*)(scalar_t, scalar_t))fn)(
-            _expr_program_evaluate_ast(program, args->head),
-            _expr_program_evaluate_ast(program, args->tail->head));
+            _expr_program_evaluate_ast(program, args->args[0]),
+            _expr_program_evaluate_ast(program, args->args[1]));
     case 3:
         return ((scalar_t(*)(scalar_t, scalar_t, scalar_t))fn)(
-            _expr_program_evaluate_ast(program, args->head),
-            _expr_program_evaluate_ast(program, args->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->head));
+            _expr_program_evaluate_ast(program, args->args[0]),
+            _expr_program_evaluate_ast(program, args->args[1]),
+            _expr_program_evaluate_ast(program, args->args[2]));
     case 4:
         return ((scalar_t(*)(scalar_t, scalar_t, scalar_t, scalar_t))fn)(
-            _expr_program_evaluate_ast(program, args->head),
-            _expr_program_evaluate_ast(program, args->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->head));
+            _expr_program_evaluate_ast(program, args->args[0]),
+            _expr_program_evaluate_ast(program, args->args[1]),
+            _expr_program_evaluate_ast(program, args->args[2]),
+            _expr_program_evaluate_ast(program, args->args[3]));
     case 5:
         return ((scalar_t(*)(scalar_t, scalar_t, scalar_t, scalar_t, scalar_t))fn)(
-            _expr_program_evaluate_ast(program, args->head),
-            _expr_program_evaluate_ast(program, args->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->tail->head));
+            _expr_program_evaluate_ast(program, args->args[0]),
+            _expr_program_evaluate_ast(program, args->args[1]),
+            _expr_program_evaluate_ast(program, args->args[2]),
+            _expr_program_evaluate_ast(program, args->args[3]),
+            _expr_program_evaluate_ast(program, args->args[4]));
     case 6:
         return ((scalar_t(*)(scalar_t, scalar_t, scalar_t, scalar_t, scalar_t, scalar_t))fn)(
-            _expr_program_evaluate_ast(program, args->head),
-            _expr_program_evaluate_ast(program, args->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->tail->tail->head));
+            _expr_program_evaluate_ast(program, args->args[0]),
+            _expr_program_evaluate_ast(program, args->args[1]),
+            _expr_program_evaluate_ast(program, args->args[2]),
+            _expr_program_evaluate_ast(program, args->args[3]),
+            _expr_program_evaluate_ast(program, args->args[4]),
+            _expr_program_evaluate_ast(program, args->args[5]));
     case 7:
-        return (
-            (scalar_t(*)(scalar_t, scalar_t, scalar_t, scalar_t, scalar_t, scalar_t, scalar_t))fn)(
-            _expr_program_evaluate_ast(program, args->head),
-            _expr_program_evaluate_ast(program, args->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->tail->tail->tail->head));
+        return ((scalar_t(*)(scalar_t, scalar_t, scalar_t, scalar_t, scalar_t, scalar_t,
+                             scalar_t))fn)(_expr_program_evaluate_ast(program, args->args[0]),
+                                           _expr_program_evaluate_ast(program, args->args[1]),
+                                           _expr_program_evaluate_ast(program, args->args[2]),
+                                           _expr_program_evaluate_ast(program, args->args[3]),
+                                           _expr_program_evaluate_ast(program, args->args[4]),
+                                           _expr_program_evaluate_ast(program, args->args[5]),
+                                           _expr_program_evaluate_ast(program, args->args[6]));
     case 8:
         return ((scalar_t(*)(scalar_t, scalar_t, scalar_t, scalar_t, scalar_t, scalar_t, scalar_t,
-                             scalar_t))fn)(
-            _expr_program_evaluate_ast(program, args->head),
-            _expr_program_evaluate_ast(program, args->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program,
-                                       args->tail->tail->tail->tail->tail->tail->tail->head));
+                             scalar_t))fn)(_expr_program_evaluate_ast(program, args->args[0]),
+                                           _expr_program_evaluate_ast(program, args->args[1]),
+                                           _expr_program_evaluate_ast(program, args->args[2]),
+                                           _expr_program_evaluate_ast(program, args->args[3]),
+                                           _expr_program_evaluate_ast(program, args->args[4]),
+                                           _expr_program_evaluate_ast(program, args->args[5]),
+                                           _expr_program_evaluate_ast(program, args->args[6]),
+                                           _expr_program_evaluate_ast(program, args->args[7]));
     case 9:
         return ((scalar_t(*)(scalar_t, scalar_t, scalar_t, scalar_t, scalar_t, scalar_t, scalar_t,
                              scalar_t, scalar_t))fn)(
-            _expr_program_evaluate_ast(program, args->head),
-            _expr_program_evaluate_ast(program, args->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program,
-                                       args->tail->tail->tail->tail->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program,
-                                       args->tail->tail->tail->tail->tail->tail->tail->tail->head));
+            _expr_program_evaluate_ast(program, args->args[0]),
+            _expr_program_evaluate_ast(program, args->args[1]),
+            _expr_program_evaluate_ast(program, args->args[2]),
+            _expr_program_evaluate_ast(program, args->args[3]),
+            _expr_program_evaluate_ast(program, args->args[4]),
+            _expr_program_evaluate_ast(program, args->args[5]),
+            _expr_program_evaluate_ast(program, args->args[6]),
+            _expr_program_evaluate_ast(program, args->args[7]),
+            _expr_program_evaluate_ast(program, args->args[8]));
     case 10:
         return ((scalar_t(*)(scalar_t, scalar_t, scalar_t, scalar_t, scalar_t, scalar_t, scalar_t,
                              scalar_t, scalar_t, scalar_t))fn)(
-            _expr_program_evaluate_ast(program, args->head),
-            _expr_program_evaluate_ast(program, args->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program, args->tail->tail->tail->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program,
-                                       args->tail->tail->tail->tail->tail->tail->tail->head),
-            _expr_program_evaluate_ast(program,
-                                       args->tail->tail->tail->tail->tail->tail->tail->tail->head),
-            _expr_program_evaluate_ast(
-                program, args->tail->tail->tail->tail->tail->tail->tail->tail->tail->head));
+            _expr_program_evaluate_ast(program, args->args[0]),
+            _expr_program_evaluate_ast(program, args->args[1]),
+            _expr_program_evaluate_ast(program, args->args[2]),
+            _expr_program_evaluate_ast(program, args->args[3]),
+            _expr_program_evaluate_ast(program, args->args[4]),
+            _expr_program_evaluate_ast(program, args->args[5]),
+            _expr_program_evaluate_ast(program, args->args[6]),
+            _expr_program_evaluate_ast(program, args->args[7]),
+            _expr_program_evaluate_ast(program, args->args[8]),
+            _expr_program_evaluate_ast(program, args->args[9]));
     }
     return NAN;
 }
 
 scalar_t _expr_program_evaluate_ast_id(expr_program_t program, expr_ast_t ast) {
-    assert(ast->type == AST_EXPR_ID || ast->type == AST_EXPR_ID_CACHED);
+    // assert(ast->type == AST_EXPR_ID || ast->type == AST_EXPR_ID_CACHED);
 
     // Return the value at the cached memory location.
     if (ast->type == AST_EXPR_ID_CACHED) {
@@ -175,12 +167,12 @@ scalar_t _expr_program_evaluate_ast_id(expr_program_t program, expr_ast_t ast) {
     // Lookup the symbol in the symbols table.
     int arity = 0;
     if (ast->args) {
-        arity = expr_ast_list_length(ast->args);
+        arity = ast->args->count;
     }
 
     expr_sym_t symbol = expr_sym_table_lookup(program->symbols, ast->lval.sval, arity);
     if (symbol == NULL) {
-        abort();
+        fprintf(stderr, "could not find symbol: %s/%d\n", ast->lval.sval, arity);
         return NAN;
     }
 
