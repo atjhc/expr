@@ -1,8 +1,12 @@
-## Minimal expression language
+## What?
 
 This C library provides a very minimal API for embedding a simple expression language into your application. The language syntax is fixed, but the API provides a mechianism for adding builtin symbols and functions.
 
-### Example
+## Why?
+
+Why not? I built this a long time ago while I was working on a larger project to help me understand and visualize noise functions (for [procedural content generation](https://en.wikipedia.org/wiki/Procedural_generation)). I figured it could be useful for others, and decided to refactor it into a self contained library. I've also kept it relatively simple, so it can be used as a reference for how you might implement a lexer/parser in your own application.
+
+### How?
 A basic example:
 ```C
 #include <stdio.h>
