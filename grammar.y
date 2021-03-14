@@ -1,7 +1,7 @@
 %pure-parser
 %lex-param   { yyscan_t scanner }
 %parse-param { yyscan_t scanner }
-%parse-param { ast_expr_t *output }
+%parse-param { expr_ast_t *output }
 
 %{
 
@@ -21,8 +21,8 @@ int yyerror();
 %}
 
 %union {
-    ast_expr_t eval;
-    ast_expr_list_t elval;
+    expr_ast_t eval;
+    expr_ast_list_t elval;
     char *aval;
     double dval;
 }
@@ -49,24 +49,24 @@ stmt: expr {
 };
 
 expr: LPAREN expr RPAREN            { $$ = $2; }
-    | expr PLUS expr                { $$ = ast_expr_create(AST_EXPR_PLUS, $1, $3); }
-    | expr MINUS expr               { $$ = ast_expr_create(AST_EXPR_MINUS, $1, $3); }
-    | expr MULT expr                { $$ = ast_expr_create(AST_EXPR_MULT, $1, $3);  }
-    | expr DIV expr                 { $$ = ast_expr_create(AST_EXPR_DIV, $1, $3); }
-    | expr GT expr                  { $$ = ast_expr_create(AST_EXPR_GT, $1, $3); }
-    | expr LT expr                  { $$ = ast_expr_create(AST_EXPR_LT, $1, $3); }
-    | expr AND expr                 { $$ = ast_expr_create(AST_EXPR_AND, $1, $3); }
-    | expr OR expr                  { $$ = ast_expr_create(AST_EXPR_OR, $1, $3); }
-    | MINUS expr %prec UMINUS       { $$ = ast_expr_create(AST_EXPR_UMINUS, $2); }
-    | NOT expr %prec UNOT           { $$ = ast_expr_create(AST_EXPR_NOT, $2); }
-    | expr POW expr                 { $$ = ast_expr_create(AST_EXPR_POW, $1, $3); }
-    | ID                            { $$ = ast_expr_create(AST_EXPR_ID, $1, NULL); free($1); }
-    | ID LPAREN expr_list RPAREN    { $$ = ast_expr_create(AST_EXPR_ID, $1, $3); free($1); }
-    | NUMBER                        { $$ = ast_expr_create(AST_EXPR_NUMBER, $1);  }
+    | expr PLUS expr                { $$ = expr_ast_create(AST_EXPR_PLUS, $1, $3); }
+    | expr MINUS expr               { $$ = expr_ast_create(AST_EXPR_MINUS, $1, $3); }
+    | expr MULT expr                { $$ = expr_ast_create(AST_EXPR_MULT, $1, $3);  }
+    | expr DIV expr                 { $$ = expr_ast_create(AST_EXPR_DIV, $1, $3); }
+    | expr GT expr                  { $$ = expr_ast_create(AST_EXPR_GT, $1, $3); }
+    | expr LT expr                  { $$ = expr_ast_create(AST_EXPR_LT, $1, $3); }
+    | expr AND expr                 { $$ = expr_ast_create(AST_EXPR_AND, $1, $3); }
+    | expr OR expr                  { $$ = expr_ast_create(AST_EXPR_OR, $1, $3); }
+    | MINUS expr %prec UMINUS       { $$ = expr_ast_create(AST_EXPR_UMINUS, $2); }
+    | NOT expr %prec UNOT           { $$ = expr_ast_create(AST_EXPR_NOT, $2); }
+    | expr POW expr                 { $$ = expr_ast_create(AST_EXPR_POW, $1, $3); }
+    | ID                            { $$ = expr_ast_create(AST_EXPR_ID, $1, NULL); free($1); }
+    | ID LPAREN expr_list RPAREN    { $$ = expr_ast_create(AST_EXPR_ID, $1, $3); free($1); }
+    | NUMBER                        { $$ = expr_ast_create(AST_EXPR_NUMBER, $1);  }
     ;
 
-expr_list:  expr            { $$ = ast_expr_list_create($1); }
-    | expr COMMA expr_list  { $$ = ast_expr_list_cons($3, $1); }
+expr_list:  expr            { $$ = expr_ast_list_create($1); }
+    | expr COMMA expr_list  { $$ = expr_ast_list_cons($3, $1); }
     ;
 
 %%

@@ -1,10 +1,10 @@
-#ifndef SYM_H
-#define SYM_H
+#ifndef EXPR_SYM_H
+#define EXPR_SYM_H
 
 #define SYMHASH_SIZE 128
 #define SYMHASH_MASK 127
 
-typedef struct sym_s {
+typedef struct expr_sym_s {
     int hashv;
 
     char *name;
@@ -12,18 +12,18 @@ typedef struct sym_s {
 
     void *value;
 
-    struct sym_s *next;
-} * sym_t;
+    struct expr_sym_s *next;
+} * expr_sym_t;
 
-typedef struct sym_table_s {
-    sym_t table[SYMHASH_SIZE];
+typedef struct expr_sym_table_s {
+    expr_sym_t table[SYMHASH_SIZE];
     int count;
-} * sym_table_t;
+} * expr_sym_table_t;
 
-sym_table_t sym_table_create();
-void sym_table_destroy(sym_table_t table);
+expr_sym_table_t expr_sym_table_create();
+void expr_sym_table_destroy(expr_sym_table_t table);
 
-void sym_table_insert(sym_table_t st, const char *name, int arity, void *value);
-sym_t sym_table_lookup(sym_table_t table, const char *name, int arity);
+void expr_sym_table_insert(expr_sym_table_t st, const char *name, int arity, void *value);
+expr_sym_t expr_sym_table_lookup(expr_sym_table_t table, const char *name, int arity);
 
 #endif // SYM_H

@@ -19,42 +19,42 @@ typedef enum {
     AST_EXPR_AND,
     AST_EXPR_OR,
     AST_EXPR_NOT
-} ast_expr_type_t;
+} expr_ast_type_t;
 
 #ifndef NULL
 #define NULL ((void *)0)
 #endif
 
-struct ast_expr_s;
-struct ast_expr_list_s;
+struct expr_ast_s;
+struct expr_ast_list_s;
 
-typedef struct ast_expr_list_s {
-    struct ast_expr_s *head;
-    struct ast_expr_list_s *tail;
-} * ast_expr_list_t;
+typedef struct expr_ast_list_s {
+    struct expr_ast_s *head;
+    struct expr_ast_list_s *tail;
+} * expr_ast_list_t;
 
-typedef struct ast_expr_s {
-    ast_expr_type_t type;
+typedef struct expr_ast_s {
+    expr_ast_type_t type;
     union {
         char *sval;
         double dval;
         double *pval;
     } lval;
 
-    struct ast_expr_list_s *args;
-    struct ast_expr_s *left, *right;
-} * ast_expr_t;
+    struct expr_ast_list_s *args;
+    struct expr_ast_s *left, *right;
+} * expr_ast_t;
 
-ast_expr_t ast_expr_create(ast_expr_type_t type, ...);
-void ast_expr_destroy(ast_expr_t expr);
+expr_ast_t expr_ast_create(expr_ast_type_t type, ...);
+void expr_ast_destroy(expr_ast_t expr);
 
-ast_expr_list_t ast_expr_list_create(ast_expr_t expr);
-void ast_expr_list_destroy(ast_expr_list_t expr_list);
+expr_ast_list_t expr_ast_list_create(expr_ast_t expr);
+void expr_ast_list_destroy(expr_ast_list_t expr_list);
 
-ast_expr_list_t ast_expr_list_cons(ast_expr_list_t expr_list, ast_expr_t expr);
-int ast_expr_list_length(ast_expr_list_t expr_list);
+expr_ast_list_t expr_ast_list_cons(expr_ast_list_t expr_list, expr_ast_t expr);
+int expr_ast_list_length(expr_ast_list_t expr_list);
 
-void _ast_expr_list_fprint(FILE *f, ast_expr_list_t expr_list);
-void _ast_expr_fprint(FILE *f, ast_expr_t expr);
+void _expr_ast_list_fprint(FILE *f, expr_ast_list_t expr_list);
+void _expr_ast_fprint(FILE *f, expr_ast_t expr);
 
 #endif // AST_H

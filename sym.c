@@ -14,8 +14,8 @@ static unsigned int hash(const char *str, unsigned int len) {
     return (hash & 0x7FFFFFFF);
 }
 
-sym_table_t sym_table_create() {
-    sym_table_t st = malloc(sizeof(struct sym_table_s));
+expr_sym_table_t expr_sym_table_create() {
+    expr_sym_table_t st = malloc(sizeof(struct expr_sym_table_s));
 
     for (int i = 0; i < SYMHASH_SIZE; i++) {
         st->table[i] = NULL;
@@ -24,8 +24,8 @@ sym_table_t sym_table_create() {
     return st;
 }
 
-void sym_table_destroy(sym_table_t st) {
-    sym_t p, pn;
+void expr_sym_table_destroy(expr_sym_table_t st) {
+    expr_sym_t p, pn;
 
     for (int i = 0; i < SYMHASH_SIZE; i++) {
         for (p = st->table[i]; p != NULL; p = pn) {
@@ -39,15 +39,15 @@ void sym_table_destroy(sym_table_t st) {
     free(st);
 }
 
-void sym_table_insert(sym_table_t st, const char *name, int arity, void *value) {
-    sym_t symbol = NULL, temp = NULL;
+void expr_sym_table_insert(expr_sym_table_t st, const char *name, int arity, void *value) {
+    expr_sym_t symbol = NULL, temp = NULL;
     unsigned int bucket = 0;
 
-    if ((symbol = sym_table_lookup(st, name, arity)) != NULL) {
+    if ((symbol = expr_sym_table_lookup(st, name, arity)) != NULL) {
         symbol->value = value;
     }
 
-    symbol = malloc(sizeof(struct sym_s));
+    symbol = malloc(sizeof(struct expr_sym_s));
     symbol->name = strdup(name);
     symbol->arity = arity;
     symbol->value = value;
@@ -61,11 +61,11 @@ void sym_table_insert(sym_table_t st, const char *name, int arity, void *value) 
     st->count++;
 }
 
-sym_t sym_table_lookup(sym_table_t st, const char *name, int arity) {
+expr_sym_t expr_sym_table_lookup(expr_sym_table_t st, const char *name, int arity) {
     unsigned int hashv = hash(name, strlen(name));
     unsigned int bucket = hashv & SYMHASH_MASK;
 
-    sym_t p = NULL;
+    expr_sym_t p = NULL;
     for (p = st->table[bucket]; p != NULL; p = p->next) {
         if (hashv == p->hashv && strcmp(p->name, name) == 0 && p->arity == arity) {
             return p;

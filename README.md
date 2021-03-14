@@ -1,6 +1,6 @@
 ## Minimal expression language
 
-This C library provides a very minimal API for embedding a simple expression language into your application. The language syntax is fixed, but the API provides a mechianism for adding user-defined symbols and functions.
+This C library provides a very minimal API for embedding a simple expression language into your application. The language syntax is fixed, but the API provides a mechianism for adding builtin symbols and functions.
 
 ### Example
 A basic example:
@@ -10,21 +10,21 @@ A basic example:
 #include <expr.h>
 
 int main(int argc, char *argv[]) {
-    expr_t expr = expr_create("x * sin(-pi) + pow(2, 3)");
+    expr_program_t program = expr_program_create("x * sin(-pi) + pow(2, 3)");
 
     double x = 10;
     double pi = 3.14159;
 
-    expr_insert_symbol(expr, "x", 0, &x);
-    expr_insert_symbol(expr, "pi", 0, &pi);
+    expr_program_insert_symbol(program, "x", 0, &x);
+    expr_program_insert_symbol(program, "pi", 0, &pi);
 
-    expr_insert_symbol(expr, "sin", 1, sin);
-    expr_insert_symbol(expr, "pow", 2, pow);
+    expr_program_insert_symbol(program, "sin", 1, sin);
+    expr_program_insert_symbol(program, "pow", 2, pow);
 
-    float result = expr_evaluate(expr);
+    scalar_t result = expr_program_evaluate(program);
     printf("%f\n", result);
 
-    expr_destroy(expr);
+    expr_program_destroy(program);
 
     return 0;
 }
