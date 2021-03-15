@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     expr_program_insert_symbol(program, "sin", 1, sin);
     expr_program_insert_symbol(program, "pow", 2, pow);
 
-    scalar_t result = expr_program_evaluate(program);
+    expr_scalar_t result = expr_program_evaluate(program);
     printf("%f\n", result);
 
     expr_program_destroy(program);

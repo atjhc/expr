@@ -9,6 +9,7 @@
 #include <math.h>
 
 #include "ast.h"
+#include "expr.h"
 
 #ifndef YY_TYPEDEF_YY_SCANNER_T
     #define YY_TYPEDEF_YY_SCANNER_T
@@ -23,8 +24,8 @@ int yyerror();
 %union {
     expr_ast_t eval;
     expr_ast_list_t elval;
+    expr_scalar_t dval;
     char *aval;
-    double dval;
 }
 
 %left AND OR

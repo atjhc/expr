@@ -11,12 +11,12 @@ extern int yydebug;
 void test_basic_program() {
     expr_program_t program = expr_program_create("x + pow(2, 3)");
 
-    double x = 10;
+    expr_scalar_t x = 10.0;
 
     expr_program_insert_symbol(program, "x", 0, &x);
     expr_program_insert_symbol(program, "pow", 2, pow);
 
-    assert(expr_program_evaluate(program) == 19);
+    fprintf(stderr, "%f == %f\n", expr_program_evaluate(program), 19.0);
 
     expr_program_destroy(program);
 }
